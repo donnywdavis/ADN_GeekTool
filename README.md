@@ -9,7 +9,7 @@ This is a Ruby script to fetch your user informations from App.net.
 
 ## How
 
-1. Fill in your private token at the beggining of the script.
+1. Fill in your private token at the beginning of the script.
 2. Call the script from the "SHELL" form in GeekTool.
 
 ## Who
