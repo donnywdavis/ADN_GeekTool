@@ -22,9 +22,13 @@ USERS_URL = BASE_URL + "stream/0/users/"
 
 @including = "&include_html=1&include_annotations=0"
 
+# Replace "me" by "@anyusername" to get infos about @anyusername
+
+@user_handle = "me"
+
 # We build the complete URL
 
-@user_info_url = USERS_URL + "me/?access_token=#{YOUR_TOKEN}#{@including}"
+@user_info_url = USERS_URL + "#{@user_handle}/?access_token=#{YOUR_TOKEN}#{@including}"
 
 # HTTP method to connect to the ADN API
 
