@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 # Get App.net user informations for GeekTool
-# Code by Eric Dejonckheere
-# Idea and comments by Andrew Thornthon, with help from Charl Dunois
+# © 2014 Code by Eric Dejonckheere (@ericd)
+# Idea and comments by Andrew Thornthon (@andrewthornton), with help from Charl Dunois (@charl)
 
-## First, you must get a token from your App.net account (check the settings in https://account.app.net/developer/apps/) and fill in the YOUR_TOKEN constant below (between the single quotes) with it
+## First, you must get a token from your App.net account (https://account.app.net/developer/apps/) and paste it in the YOUR_TOKEN constant below (between the single quotes)
 
 YOUR_TOKEN = ''
 
@@ -53,7 +53,7 @@ def get_infos
 	return resp
 end
 
-# Get the JSON then focus on the 'data' part
+## Get the JSON then focus on the 'data' part
 
 infos = get_infos()
 user_infos = infos['data']
