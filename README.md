@@ -20,3 +20,7 @@ Idea and comments by Andrew Thornthon (http://app.net/andrewthornton).
 Code by Eric Dejonckheere (http://app.net/ericd).
 
 With help from Charl Dunois (http://app.net/charl).
+
+## Screencap
+
+![Andrew Thornthon's GeekTool](https://files.app.net/tqgkdsAJ.png)
