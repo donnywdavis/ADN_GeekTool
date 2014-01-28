@@ -20,4 +20,4 @@ Code by Eric Dejonckheere (http://app.net/ericd).
 
 ## Screencap
 
-![Andrew Thornthon's GeekTool](https://files.app.net/tqgkdsAJ.png)
+![Andrew Thornthon's GeekTool](https://files.app.net/xjq5LZN-)
