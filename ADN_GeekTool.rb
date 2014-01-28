@@ -53,6 +53,24 @@ def get_infos
 	return resp
 end
 
+# Method to detect the current "Posts achievement club"
+
+def get_current_club(posts)
+	clubs = {500=>"RollClub", 1000=>"CrumpetClub", 2000=>"BitesizeCookieClub", 2600=>"CrunchClub", 3000=>"MysteryScienceClub", 5000=>"LDRClub", 8088=>"IBMPCClub", 10000=>"CookieClub", 11000=>"SpinalTapClub", 20000=>"BreakfastClub", 24000=>"CaratClub", 25000=>"PeshawarClub", 30000=>"MileHighClub", 31416=>"PiClub", 42000=>"TowelClub", 47000=>"HitmanClub", 50000=>"BaconClub", 57000=>"BrowncoatClub", 64000=>"CommodoreClub", 68000=>"MotorolaClub", 76000=>"TromboneClub", 80211=>"WiFiClub", 90000=>"PajamaClub", 100000=>"TowerOfBabble", 128000=>"MacClub", 144000=>"TwitterLeaverClub", 200000=>"GetALifeNoSrslyClub"}
+	min_count = clubs.keys[0]
+	if posts >= min_count
+		clubs.each_cons(2) do |(prev_key, prev_value), (next_key, next_value)|
+			if posts >= prev_key && posts < next_key
+				"Member of the ADN #{prev_value}."
+				break
+			end  
+		end
+	else
+		# only if posts number is less than the first club
+		"Still #{min_count - posts} posts to the #{clubs.values[0]}..."
+	end
+end
+
 ## Get the JSON then focus on the 'data' part
 
 infos = get_infos()
@@ -90,3 +108,7 @@ puts "Followers: #{followers}"
 puts "Posts: #{posts}"
 puts "Stars: #{stars}"
 puts domain
+
+# This line outputs the current "Posts achievement club"
+
+puts get_current_club(posts)
