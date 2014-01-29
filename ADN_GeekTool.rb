@@ -167,4 +167,5 @@ puts "\n\e[1;37mFile Storage:\e[0m #{storage_used}"
 # Display amount of file storage used
 
 storage_available, storage_used = get_file_storage()
-puts "\n\e[1;37mFile Storage:\e[0m Used #{readable_file_size(storage_used, '0')} of #{readable_file_size(storage_available, '0')}"
+total_storage = storage_available + storage_used
+puts "\n\e[1;37mFile Storage:\e[0m Used #{readable_file_size(storage_used, '1')} of #{readable_file_size(total_storage, '1')}"
