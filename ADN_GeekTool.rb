@@ -30,6 +30,10 @@ USERS_URL = BASE_URL + "stream/0/users/"
 
 @user_info_url = USERS_URL + "#{@user_handle}/?access_token=#{YOUR_TOKEN}#{@including}"
 
+# Build url to retrieve users file storage info
+
+@user_file_info_url = USERS_URL + "#{@user_handle}/files/?access_token=#{YOUR_TOKEN}"
+
 # HTTP method to connect to the ADN API
 
 def connect(url)
@@ -53,6 +57,22 @@ def get_infos
 	return resp
 end
 
+# Method to get the File Info JSON response from ADN
+
+def get_file_storage
+	adn_response = connect(@user_file_info_url)
+	abort("Error: #{adn_response.inspect}") unless adn_response.code == "200"
+	resp = JSON.parse(adn_response.body)
+	abort("ERROR: #{resp['meta']}") unless resp['meta']['code'] == 200
+	files = resp['data']
+	print files['total_size'][]
+	storage_used = 0
+	#files.each do |file|
+	#        storage_used += file['total_size']
+	#end
+	return storage_used
+end
+
 # Method to detect the current "Posts achievement club"
 
 def get_current_club(posts)
@@ -69,6 +89,32 @@ def get_current_club(posts)
 		# only if posts number is less than the first club
 		puts "Still #{min_count - posts} posts to the #{clubs.values[0]}..."
 	end
+end
+
+# Method to get the File Info JSON response from ADN
+
+def get_file_storage()
+   adn_response = connect(TOKEN_URL)
+   abort("Error: #{adn_response.inspect}") unless adn_response.code == "200"
+   resp = JSON.parse(adn_response.body)
+   abort("ERROR: #{resp['meta']}") unless resp['meta']['code'] == 200
+   file_storage = resp['data']['storage']
+   return file_storage['available'], file_storage['used']
+end
+
+# Return the file size with a readable style.
+
+GIGA_SIZE = 1073741824.0
+MEGA_SIZE = 1048576.0
+KILO_SIZE = 1024.0
+def readable_file_size(size, precision)
+ case
+   when size == 1 then "1 Byte"
+   when size < KILO_SIZE then "%d Bytes" % size
+   when size < MEGA_SIZE then "%.#{precision}f KB" % (size / KILO_SIZE)
+   when size < GIGA_SIZE then "%.#{precision}f MB" % (size / MEGA_SIZE)
+   else "%.#{precision}f GB" % (size / GIGA_SIZE)
+ end
 end
 
 ## Get the JSON then focus on the 'data' part
@@ -112,3 +158,13 @@ puts domain
 # This line outputs the current "Posts achievement club"
 
 get_current_club(posts)
+
+# Display amount of file storage used
+
+storage_used = get_file_storage()
+puts "\n\e[1;37mFile Storage:\e[0m #{storage_used}"
+
+# Display amount of file storage used
+
+storage_available, storage_used = get_file_storage()
+puts "\n\e[1;37mFile Storage:\e[0m Used #{readable_file_size(storage_used, '0')} of #{readable_file_size(storage_available, '0')}"
