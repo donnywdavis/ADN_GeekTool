@@ -61,7 +61,7 @@ def get_current_club(posts)
 	if posts >= min_count
 		clubs.each_cons(2) do |(prev_key, prev_value), (next_key, next_value)|
 			if posts >= prev_key && posts < next_key
-				puts "Member of the ADN #{prev_value}."
+				return "Member of the ADN #{prev_value}."
 				break
 			end  
 		end
@@ -105,10 +105,6 @@ puts "\e[1;37mCurrent username:\e[0m #{username}"
 puts "\e[1;37mMember number:\e[0m #{id}\n\n"
 puts "\e[1;37mCurrent Bio:\e[0m \n\n#{bio}\n\n"
 puts "\e[1;37mFollowers:\e[0m #{followers}"
-puts "\e[1;37mPosts:\e[0m #{posts}"
+puts "\e[1;37mPosts:\e[0m #{posts} - " + get_current_club(posts)
 puts "\e[1;37mStars:\e[0m #{stars}"
 puts "\e[1;37mVerified Domain:\e[0m http://#{domain}" unless domain == ""
-
-# This line outputs the current "Posts achievement club"
-
-get_current_club(posts)
