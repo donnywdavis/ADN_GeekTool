@@ -101,13 +101,13 @@ id = user_infos['id']
 
 ## The values below are going to take the information we defined above and display it, you can re-arrange anything below and that is how it will appear on your desktop with GeekTool
  
-puts "Current username: #{username}" 
-puts "Member number: #{id}\n\n"
-puts "Current Bio:\n\n#{bio}\n\n"
-puts "Followers: #{followers}"
-puts "Posts: #{posts}"
-puts "Stars: #{stars}"
-puts domain
+puts "\e[1;37mCurrent username:\e[0m #{username}" 
+puts "\e[1;37mMember number:\e[0m #{id}\n\n"
+puts "\e[1;37mCurrent Bio:\e[0m \n\n#{bio}\n\n"
+puts "\e[1;37mFollowers:\e[0m #{followers}"
+puts "\e[1;37mPosts:\e[0m #{posts}"
+puts "\e[1;37mStars:\e[0m #{stars}"
+puts "\e[1;37mVerified Domain:\e[0m http://#{domain}" unless domain == ""
 
 # This line outputs the current "Posts achievement club"
 
