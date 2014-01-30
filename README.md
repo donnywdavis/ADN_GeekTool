@@ -14,9 +14,11 @@ This is a Ruby script to fetch your user informations from App.net.
 
 ## Who
 
-Idea and comments by Andrew Thornton (http://app.net/andrewthornton) and Charl Dunois (http://app.net/charl).
+Idea, comments and help by Andrew Thornton (http://app.net/andrewthornton) and Charl Dunois (http://app.net/charl).
 
-Code by Eric Dejonckheere (http://app.net/ericd).
+Original code by Eric Dejonckheere (http://app.net/ericd).
+
+Additional code by Donny Davis (http://app.net/donnywdavis).
 
 ## Screencap
 
