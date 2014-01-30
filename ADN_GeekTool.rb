@@ -24,10 +24,6 @@ TOKEN_URL = BASE_URL + "stream/0/token/"
 
 @including = "&include_html=1&include_annotations=0"
 
-# Pagination parameters
-
-@pagination = ""
-
 # Replace "me" by "@anyusername" to get infos about @anyusername
 
 @user_handle = "me"
