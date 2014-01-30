@@ -2,7 +2,7 @@
 # encoding: utf-8
 # Get App.net user informations for GeekTool
 # © 2014 Code by Eric Dejonckheere (@ericd)
-# Idea and comments by Andrew Thornthon (@andrewthornton), with help from Charl Dunois (@charl)
+# Idea and comments by Andrew Thornton (@andrewthornton), with help from Charl Dunois (@charl)
 
 ## First, you must get a token from your App.net account (https://account.app.net/developer/apps/) and paste it in the YOUR_TOKEN constant below (between the single quotes)
 
