@@ -75,7 +75,7 @@ def get_current_club(posts)
       end
    else
       # only if posts number is less than the first club
-      puts "Still #{min_count - posts} posts to the #{clubs.values[0]}..."
+      return "Still #{min_count - posts} posts to the #{clubs.values[0]}..."
    end
 end
 
