@@ -5,6 +5,8 @@
 # Additional code by Donny Davis (@donnywdavis)
 # Original idea and comments by Andrew Thornton (@andrewthornton), with help from Charl Dunois (@charl)
 
+# CONFIGURATION
+
 ## First, you must get a token from your App.net account (https://account.app.net/developer/apps/) and paste it in the YOUR_TOKEN constant below (between the single quotes)
 
 YOUR_TOKEN = ''
@@ -16,24 +18,27 @@ require 'net/http'
 require 'open-uri'
 require 'openssl'
 
+# URLs
+
 BASE_URL = "https://alpha-api.app.net/"
 USERS_URL = BASE_URL + "stream/0/users/"
 TOKEN_URL = BASE_URL + "stream/0/token/"
 
-
-# "include_html" and "include_annotations" are options that can be turned off or on, to do so change the value: 0 for false, 1 for true
+## "include_html" and "include_annotations" are options that can be turned off or on, to do so change the value: 0 for false, 1 for true
 
 @including = "&include_html=1&include_annotations=0"
 
-# Replace "me" by "@anyusername" to get infos about @anyusername
+## Replace "me" by "@anyusername" to get infos about @anyusername
 
 @user_handle = "me"
 
-# We build the complete URL
+## We build the complete URL
 
 @user_info_url = USERS_URL + "#{@user_handle}/?access_token=#{YOUR_TOKEN}#{@including}"
 
-# HTTP method to connect to the ADN API
+# METHODS
+
+## HTTP method to connect to the ADN API
 
 def connect(url)
    uri = URI.parse(URI.encode(url))
@@ -46,7 +51,7 @@ def connect(url)
    https.request(request)
 end
 
-# Method to get the User Info JSON response from ADN and check for errors
+## Method to get the User Info JSON response from ADN and check for errors
 
 def get_infos
    adn_response = connect(@user_info_url)
@@ -56,7 +61,7 @@ def get_infos
    return resp
 end
 
-# Method to detect the current "Posts achievement club"
+## Method to detect the current "Posts achievement club"
 
 def get_current_club(posts)
    clubs = {500=>"RollClub", 1000=>"CrumpetClub", 2000=>"BitesizeCookieClub", 2600=>"CrunchClub", 3000=>"MysteryScienceClub", 5000=>"LDRClub", 8088=>"IBMPCClub", 10000=>"CookieClub", 11000=>"SpinalTapClub", 20000=>"BreakfastClub", 24000=>"CaratClub", 25000=>"PeshawarClub", 30000=>"MileHighClub", 31416=>"PiClub", 42000=>"TowelClub", 47000=>"HitmanClub", 50000=>"BaconClub", 57000=>"BrowncoatClub", 64000=>"CommodoreClub", 68000=>"MotorolaClub", 76000=>"TromboneClub", 80211=>"WiFiClub", 90000=>"PajamaClub", 100000=>"TowerOfBabble", 128000=>"MacClub", 144000=>"TwitterLeaverClub", 200000=>"GetALifeNoSrslyClub"}
@@ -74,7 +79,7 @@ def get_current_club(posts)
    end
 end
 
-# Method to get the File Info JSON response from ADN
+## Method to get the File Info JSON response from ADN
 
 def get_file_storage()
    adn_response = connect(TOKEN_URL)
@@ -85,7 +90,8 @@ def get_file_storage()
    return file_storage['available'], file_storage['used']
 end
 
-# Return the file size with a readable style.
+## Return the file size with a readable style
+
 GIGA_SIZE = 1073741824.0
 MEGA_SIZE = 1048576.0
 KILO_SIZE = 1024.0
@@ -99,7 +105,7 @@ def readable_file_size(size)
    end
 end
 
-# Return the percentage of file storage used
+## Return the percentage of file storage used
 
 def get_storage_percentage(total_storage = 0, storage = 0)
    total_storage = total_storage.to_s.slice(0,3).to_f / 10 unless total_storage == 0
@@ -115,35 +121,60 @@ def get_storage_percentage(total_storage = 0, storage = 0)
    end
 end
 
-## Get the JSON then focus on the 'data' part
+# We extend the Ruby String class to get a few convenient coloring methods for text output
+
+## Just apply the method to your text like this: "text".bold
+
+class String
+    def bold
+        "\033[1m#{self}\033[22m" 
+    end
+    def reverse_color
+        "\033[7m#{self}\033[27m" 
+    end
+    def red
+        "\033[31m#{self}\033[0m" 
+    end
+    def green
+        "\033[32m#{self}\033[0m" 
+    end
+    def yellow
+        "\033[33m#{self}\033[0m" 
+    end
+    def blue
+        "\033[34m#{self}\033[0m" 
+    end
+end
+
+# Get the JSON then focus on the 'data' part
 
 infos = get_infos()
 user_infos = infos['data']
 
-## We are going to define what information we want to use from the JSON file that is returned from ADN
+# We are going to define what information we want to use from the JSON file that is returned from ADN
 
-# Gets followers, counts and followers, counts is required as this is a count function
+## Gets followers, counts and followers, counts is required as this is a count function
 followers = user_infos['counts']['followers']
 
-# Gets posts, counts and posts, counts is required as this is a count function 
+## Gets posts, counts and posts, counts is required as this is a count function 
 posts = user_infos['counts']['posts']
 
-# Gets stars, counts and posts, counts is required as this is a count function
+## Gets stars, counts and posts, counts is required as this is a count function
 stars = user_infos['counts']['stars']
 
-# Grabs your current username
+## Grabs your current username
 username = user_infos['username']
 
-# Grabs your current bio and displays it as text, tried to print the HTML version but geektool didn't like it (creates an empty string if no text)
+## Grabs your current bio and displays it as text, tried to print the HTML version but geektool didn't like it (creates an empty string if no text)
 bio = user_infos['description']['text'] || ""
 
-# Grabs your verified domain (creates an empty string if no domain)
+## Grabs your verified domain (creates an empty string if no domain)
 domain = user_infos['verified_domain'] || ""
 
-# Gets your member number 
+## Gets your member number 
 id = user_infos['id']
 
-## The values below are going to take the information we defined above and display it, you can re-arrange anything below and that is how it will appear on your desktop with GeekTool
+# The values below are going to take the information we defined above and display it, you can re-arrange anything below and that is how it will appear on your desktop with GeekTool
  
 puts "\e[1;37mCurrent username:\e[0m #{username}" 
 puts "\e[1;37mMember number:\e[0m #{id}\n\n"
