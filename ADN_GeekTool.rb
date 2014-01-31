@@ -176,18 +176,18 @@ id = user_infos['id']
 
 # The values below are going to take the information we defined above and display it, you can re-arrange anything below and that is how it will appear on your desktop with GeekTool
  
-puts "\e[1;37mCurrent username:\e[0m #{username}" 
-puts "\e[1;37mMember number:\e[0m #{id}\n\n"
-puts "\e[1;37mCurrent Bio:\e[0m \n\n#{bio}\n\n"
-puts "\e[1;37mFollowers:\e[0m #{followers}"
-puts "\e[1;37mPosts:\e[0m #{posts} - " + get_current_club(posts)
-puts "\e[1;37mStars:\e[0m #{stars}"
-puts "\e[1;37mVerified Domain:\e[0m http://#{domain}" unless domain == ""
+puts "Current username: ".bold + "#{username}" 
+puts "Member number: ".bold + "#{id}\n\n"
+puts "Current Bio: ".bold + "\n\n#{bio}\n\n"
+puts "Followers: ".bold + "#{followers}"
+puts "Posts: ".bold + "#{posts} - " + get_current_club(posts)
+puts "Stars: ".bold + "#{stars}"
+puts "Verified Domain: ".bold + "http://#{domain}" unless domain == ""
 
 # Display amount of file storage used
 
 storage_available, storage_used = get_file_storage()
 total_storage = storage_available + storage_used
-puts "\n\e[1;37mFile Storage:\e[0m #{readable_file_size(total_storage)}"
-puts "\e[1;37m-Used:\e[0m #{readable_file_size(storage_used)} (#{get_storage_percentage(total_storage, storage_used)}%)"
-puts "\e[1;37m-Available:\e[0m #{readable_file_size(storage_available)} (#{get_storage_percentage(total_storage, storage_available)}%)"
+puts "\nFile Storage: ".bold + "#{readable_file_size(total_storage)}"
+puts "-Used: ".bold + "#{readable_file_size(storage_used)} (#{get_storage_percentage(total_storage, storage_used)}%)"
+puts "-Available: ".bold + "#{readable_file_size(storage_available)} (#{get_storage_percentage(total_storage, storage_available)}%)"
