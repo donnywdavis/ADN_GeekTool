@@ -92,32 +92,34 @@ end
 
 ## Return the file size with a readable style
 
-GIGA_SIZE = 1073741824.0
-MEGA_SIZE = 1048576.0
-KILO_SIZE = 1024.0
+GIGABYTE = 1073741824.0
+MEGABYTE = 1048576.0
+KILOBYTE = 1024.0
 def readable_file_size(size)
    case
    when size == 1 then "1 Byte"
-   when size < KILO_SIZE then "#{size} Bytes"
-   when size < MEGA_SIZE then "#{size.to_s.slice(0,3).to_f / 10} KB"
-   when size < GIGA_SIZE then "#{size.to_s.slice(0,3).to_f / 10} MB"
-   else "#{size.to_s.slice(0,3).to_f / 10} GB"
+   when size < KILOBYTE then "#{size} Bytes"
+   when size < MEGABYTE then "#{size.to_s.slice(0, get_slice_value(size)).to_f / 10} KB"
+   when size < GIGABYTE then "#{size.to_s.slice(0, get_slice_value(size)).to_f / 10} MB"
+   else "#{size.to_s.slice(0, get_slice_value(size)).to_f / 10} GB"
    end
 end
 
-## Return the percentage of file storage used
+# Get the number of characters to substring out of the size
 
-def get_storage_percentage(total_storage = 0, storage = 0)
-   total_storage = total_storage.to_s.slice(0,3).to_f / 10 unless total_storage == 0
-   storage = storage.to_s.slice(0,3).to_f / 10 unless storage == 0
-
-   case
-   when total_storage == storage then 100
-   when storage == 0 then 0
-   when total_storage > storage
-      ((storage / total_storage) * 100.0).round(1)
-   when total_storage < storage
-      ((storage / total_storage) * 0.1).round(1)
+def get_slice_value(size)
+   case 
+   when size >= KILOBYTE && size < MEGABYTE
+      if size < 100000 then slice_value = 3
+      elsif size >= 100000 then slice_value =4
+      end
+   when size >= MEGABYTE && size < GIGABYTE
+      if size < 10000000 then slice_value = 2
+      elsif size < 100000000 then slice_value = 3
+      elsif size >= 100000000 then slice_value = 4
+      end
+   when size >= GIGABYTE
+      slice_value = 3
    end
 end
 
@@ -189,5 +191,5 @@ puts "Verified Domain: ".bold + "http://#{domain}" unless domain == ""
 storage_available, storage_used = get_file_storage()
 total_storage = storage_available + storage_used
 puts "\nFile Storage: ".bold + "#{readable_file_size(total_storage)}"
-puts "-Used: ".bold + "#{readable_file_size(storage_used)} (#{get_storage_percentage(total_storage, storage_used)}%)"
-puts "-Available: ".bold + "#{readable_file_size(storage_available)} (#{get_storage_percentage(total_storage, storage_available)}%)"
+puts "-Used: ".bold + "#{readable_file_size(storage_used)}"
+puts "-Available: ".bold + "#{readable_file_size(storage_available)}"
